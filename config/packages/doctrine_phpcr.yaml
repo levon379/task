@@ -1,0 +1,7 @@
+# config/packages/doctrine_phpcr.yaml
+
+#doctrine_phpcr:
+#  odm:
+#    mappings:
+#      SonataMediaBundle:
+#        prefix: Sonata\MediaBundle\PHPCR

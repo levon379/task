@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\MediaBundle\Form\Type\MediaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -19,7 +20,10 @@ final class DepartmentAdmin extends AbstractAdmin
             ->add('head', TextType::class)
             ->add('phone', TextType::class)
             ->add('address', TextType::class)
-            ->add('logo', TextType::class);
+            ->add('logo', MediaType::class, array(
+                'provider' => 'sonata.media.provider.image',
+                'context'  => 'default'
+            ));
 
     }
 

@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\DepartmentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
  * @ORM\Entity(repositoryClass=DepartmentRepository::class)
@@ -103,22 +104,6 @@ class Department
     }
 
     /**
-     * @return string
-     */
-    public function getLogo(): ?string
-    {
-        return $this->logo;
-    }
-
-    /**
-     * @param string $logo
-     */
-    public function setLogo(string $logo): void
-    {
-        $this->logo = $logo;
-    }
-
-    /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string")
@@ -133,11 +118,27 @@ class Department
     private $address;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="logo", type="string")
+     * @var \App\Entity\SonataMediaMedia
+     * @ORM\ManyToOne(targetEntity="App\Entity\SonataMediaMedia", cascade={"persist"}, fetch="LAZY")
      */
-    private $logo;
+    protected $logo;
+
+    /**
+     * @param MediaInterface $logo
+     */
+    public function setLogo(MediaInterface $logo)
+    {
+        $this->logo = $logo;
+    }
+
+    /**
+     * @return MediaInterface
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
 
     /**
      * @ORM\OneToMany(targetEntity=DepartmentUser::class, mappedBy="department", orphanRemoval=true)
