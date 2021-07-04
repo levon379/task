@@ -43,6 +43,12 @@ final class DepartmentAdmin extends AbstractAdmin
             ->add('address')
             ->add('logo')
         ;
+        $listMapper->add('_action', 'actions', array(
+            'actions' => array(
+                'edit' => array(),
+                'delete' => array(),
+            )
+        ));
     }
 }
 

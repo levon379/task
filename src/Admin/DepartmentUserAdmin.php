@@ -4,6 +4,7 @@
 namespace App\Admin;
 
 use App\Entity\Department;
+use App\Entity\SonataUserUser;
 use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -16,11 +17,11 @@ final class DepartmentUserAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper): void
     {
-        $formMapper->add('user_id', EntityType::class, [
-            'class' => User::class,
+        $formMapper->add('user', EntityType::class, [
+            'class' => SonataUserUser::class,
             'choice_label' => 'username',
         ]);
-        $formMapper->add('department_id', EntityType::class, [
+        $formMapper->add('department', EntityType::class, [
             'class' => Department::class,
             'choice_label' => 'name',
         ]);
@@ -31,16 +32,26 @@ final class DepartmentUserAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
-            ->add('number');
+            ->add('id')
+            ->add('user_id')
+            ->add('department_id')
+        ;
 
     }
 
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
-            ->add('name')
-
+            ->add('id')
+            ->add('user_id')
+            ->add('department_id')
         ;
+        $listMapper->add('_action', 'actions', array(
+            'actions' => array(
+                'edit' => array(),
+                'delete' => array(),
+            )
+        ));
     }
 }
 

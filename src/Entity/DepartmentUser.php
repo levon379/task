@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use App\Repository\DepartmentRepository;
+use App\Repository\DepartmentUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,8 +35,16 @@ class DepartmentUser
     private $department_id;
 
     /**
-     * @ORM\Column(name="number", type="integer")
+     * @ORM\ManyToOne(targetEntity=SonataUserUser::class, inversedBy="departmentUsers")
+     * @ORM\JoinColumn(nullable=false)
      */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Department::class, inversedBy="departmentUsers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $department;
 
     public function getUserId(): ?int
     {
@@ -58,6 +66,30 @@ class DepartmentUser
     public function setDepartmentId(int $department_id): self
     {
         $this->department_id = $department_id;
+
+        return $this;
+    }
+
+    public function getUser(): ?SonataUserUser
+    {
+        return $this->user;
+    }
+
+    public function setUser(?SonataUserUser $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDepartment(): ?Department
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?Department $department): self
+    {
+        $this->department = $department;
 
         return $this;
     }

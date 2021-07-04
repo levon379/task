@@ -29,10 +29,16 @@ class SonataUserUser extends BaseUser
      */
     protected $department;
 
+    /**
+     * @ORM\OneToMany(targetEntity=DepartmentUser::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $departmentUsers;
+
     public function __construct()
     {
         parent::__construct();
         $this->department = new ArrayCollection();
+        $this->departmentUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -60,6 +66,36 @@ class SonataUserUser extends BaseUser
     public function removeDepartment(Department $department): self
     {
         $this->department->removeElement($department);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DepartmentUser[]
+     */
+    public function getDepartmentUsers(): Collection
+    {
+        return $this->departmentUsers;
+    }
+
+    public function addDepartmentUser(DepartmentUser $departmentUser): self
+    {
+        if (!$this->departmentUsers->contains($departmentUser)) {
+            $this->departmentUsers[] = $departmentUser;
+            $departmentUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepartmentUser(DepartmentUser $departmentUser): self
+    {
+        if ($this->departmentUsers->removeElement($departmentUser)) {
+            // set the owning side to null (unless already changed)
+            if ($departmentUser->getUser() === $this) {
+                $departmentUser->setUser(null);
+            }
+        }
 
         return $this;
     }

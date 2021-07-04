@@ -6,6 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\LetterRepository;
 use Doctrine\ORM\Mapping as ORM;
+
+use App\Entity\Department;
+
 /**
  * @ORM\Entity(repositoryClass=LetterRepository::class)
  * @ORM\HasLifecycleCallbacks
@@ -25,12 +28,14 @@ class Letter
     }
 
     /**
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="SonataUserUser")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user_id;
 
     /**
-     * @ORM\Column(name="department_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Department")
+     * @ORM\JoinColumn(name="department_id", referencedColumnName="id")
      */
     private $department_id;
 

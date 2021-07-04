@@ -140,12 +140,42 @@ class Department
     private $logo;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User")
-     * @ORM\JoinTable(name="departmentuser",
-     *         joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *         inverseJoinColumns={@ORM\JoinColumn(name="department_id", referencedColumnName="id")}
-     * )
-     * @var User[]
+     * @ORM\OneToMany(targetEntity=DepartmentUser::class, mappedBy="department", orphanRemoval=true)
      */
-    //protected $user;
+    private $departmentUsers;
+
+    public function __construct()
+    {
+        $this->departmentUsers = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|DepartmentUser[]
+     */
+    public function getDepartmentUsers(): Collection
+    {
+        return $this->departmentUsers;
+    }
+
+    public function addDepartmentUser(DepartmentUser $departmentUser): self
+    {
+        if (!$this->departmentUsers->contains($departmentUser)) {
+            $this->departmentUsers[] = $departmentUser;
+            $departmentUser->setDepartment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepartmentUser(DepartmentUser $departmentUser): self
+    {
+        if ($this->departmentUsers->removeElement($departmentUser)) {
+            // set the owning side to null (unless already changed)
+            if ($departmentUser->getDepartment() === $this) {
+                $departmentUser->setDepartment(null);
+            }
+        }
+
+        return $this;
+    }
 }
