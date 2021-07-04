@@ -8,7 +8,7 @@ use Sonata\MediaBundle\Entity\BaseMedia;
      * @ORM\Entity
      * @ORM\Table(name="media__media")
      */
-    abstract class SonataMediaMedia extends BaseMedia
+    class SonataMediaMedia extends BaseMedia
     {
         /**
          * @ORM\Id
@@ -16,4 +16,9 @@ use Sonata\MediaBundle\Entity\BaseMedia;
          * @ORM\Column(type="integer")
          */
         protected $id;
+
+        public function getId()
+        {
+            return $this->id;
+        }
     }
