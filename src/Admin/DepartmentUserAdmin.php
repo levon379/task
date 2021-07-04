@@ -43,8 +43,8 @@ final class DepartmentUserAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('user_id')
-            ->add('department_id')
+            ->add('user')
+            ->add('department.name')
         ;
         $listMapper->add('_action', 'actions', array(
             'actions' => array(
